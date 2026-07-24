@@ -7,9 +7,9 @@ from rich.prompt import Prompt
 import time
  
 # --- CREDENCIALES ---
-CLIENT_ID = "tu_client_id_real_aqui"
-CLIENT_SECRET = "tu_client_secret_real_aqui"
-REDIRECT_URI = "https://www.google.com/"
+CLIENT_ID = "ae7be3d7a3024e9f81466ec3e859f089"
+CLIENT_SECRET = "72f293b4fa4f46a880d08abc34388203"
+REDIRECT_URI = "https://www.google.com"
  
 SCOPES = (
     "user-library-read user-modify-playback-state user-read-playback-state "
@@ -189,34 +189,34 @@ def buscar_cancion():
  
 def ejecutar_accion(opcion):
     try:
-        if opcion == "1":
-            buscar_cancion()
-        elif opcion == "2":
-            actual = sp.current_playback()
-            if actual and actual['is_playing']:
-                sp.pause_playback()
+        if opcion == "1": # si selecciona la opcion 1 y llama a la funcion buscar cancion
+            buscar_cancion() 
+        elif opcion == "2": #si seleccion la opcion 2
+            actual = sp.current_playback() # Que esta haciendo y dependiendo de eso ejecuta  
+            if actual and actual['is_playing']: #Si hay un reproductor abierto Y la música está sonando actualmente
+                sp.pause_playback() #Envía la orden a Spotify para que pause la canción
             else:
-                sp.start_playback()
+                sp.start_playback() #Envía la orden a Spotify para que inicie o reanude la reproducción.
             time.sleep(0.5)
-        elif opcion == "3":
-            ajustar_volumen()
+        elif opcion == "3": # si selecciona la opcion 3 y llama a la funcion de ajustar volumen
+            ajustar_volumen() 
  
-    except spotipy.SpotifyException as e:
-        if "Premium" in str(e):
+    except spotipy.SpotifyException as e: #Si es un problema con la apy
+        if "Premium" in str(e): #si detecta la palabra premium ejecuta el mensaje 
             console.print("\n[bold red]❌ Esta acción requiere Spotify Premium.[/bold red]")
             time.sleep(1.5)
-        else:
+        else: # otro tipo de error con spotify
             console.print(f"\n[bold red]❌ Error de Spotify:[/bold red] {e}")
             time.sleep(1.5)
-    except Exception:
-        console.print("\n[bold red]❌ Error:[/bold red] Asegúrate de tener Spotify abierto en algún dispositivo.")
+    except Exception: # sirve para culaquier tipo de fallo general
+        console.print("\n[bold red]❌ Error:[/bold red] Asegúrate de tener Spotify abierto en algún dispositivo.") # muestra la advertencia 
         time.sleep(1.5)
  
  
 def menu():
-    while True:
-        console.clear()
-        mostrar_logo()
+    while True: #crea un bloque infinito 
+        console.clear() #Limpia todo el texto anterior
+        mostrar_logo() #muestra el logo
  
         try:
             actual = sp.current_playback()
